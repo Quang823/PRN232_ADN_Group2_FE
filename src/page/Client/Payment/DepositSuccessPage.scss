@@ -1,0 +1,102 @@
+.ds-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 20px;
+  background-color: #ffffff;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background: radial-gradient(circle at top left, #f0f0f0, #ffffff);
+}
+
+.ds-content {
+  background: rgba(255, 255, 255, 0.9);
+  padding: 50px 40px;
+  border-radius: 25px;
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  backdrop-filter: blur(10px);
+  max-width: 520px;
+  width: 100%;
+  text-align: center;
+  animation: ds-fadeIn 0.8s ease-out;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  transition: all 0.4s ease;
+}
+
+.ds-success-icon {
+  width: 120px;
+  height: auto;
+  margin-bottom: 25px;
+  filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.15));
+  transition: transform 0.4s ease;
+}
+
+.ds-success-icon:hover {
+  transform: scale(1.08);
+}
+
+.ds-title {
+  font-size: 2.4rem;
+  color: #2ecc71;
+  font-weight: 900;
+  margin-bottom: 15px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  background: linear-gradient(to right, #27ae60, #2ecc71);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.ds-message {
+  font-size: 1.2rem;
+  color: #555;
+  line-height: 1.7;
+  margin-bottom: 20px;
+  font-weight: 500;
+}
+
+/* Optional glowing ring behind icon */
+.ds-success-icon::after {
+  content: "";
+  display: block;
+  width: 160px;
+  height: 160px;
+  position: absolute;
+  top: calc(50% - 80px);
+  left: calc(50% - 80px);
+  background: radial-gradient(circle, #2ecc71 0%, transparent 70%);
+  opacity: 0.05;
+  z-index: -1;
+  border-radius: 50%;
+}
+
+@keyframes ds-fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(25px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (max-width: 600px) {
+  .ds-content {
+    padding: 30px 20px;
+    border-radius: 20px;
+  }
+
+  .ds-title {
+    font-size: 1.9rem;
+  }
+
+  .ds-message {
+    font-size: 1rem;
+  }
+
+  .ds-success-icon {
+    width: 90px;
+  }
+}

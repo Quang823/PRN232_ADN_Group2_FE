@@ -1,0 +1,695 @@
+// Variables
+$primary-color: #6366f1;
+$secondary-color: #8b5cf6;
+$accent-color: #06b6d4;
+$pink-accent: #ec4899;
+$background-dark: #0f0f23;
+$background-light: #1a1a2e;
+$text-primary: #ffffff;
+$text-secondary: #a1a1aa;
+$glass-bg: rgba(255, 255, 255, 0.1);
+$glass-border: rgba(255, 255, 255, 0.2);
+
+// Mixins
+@mixin glass-morphism {
+  background: $glass-bg;
+  backdrop-filter: blur(20px);
+  border: 1px solid $glass-border;
+  border-radius: 20px;
+}
+
+@mixin gradient-text {
+  background: linear-gradient(
+    135deg,
+    $primary-color,
+    $secondary-color,
+    $accent-color
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+// Main Container
+.dna-login-container {
+  min-height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background: linear-gradient(
+    135deg,
+    $background-dark 0%,
+    $background-light 50%,
+    #16213e 100%
+  );
+  font-family: "Inter", -apple-system, BlinkMacSystemFont, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+// Animated Background
+.animated-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(
+        circle at 20% 30%,
+        rgba(99, 102, 241, 0.3) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 80% 70%,
+        rgba(139, 92, 246, 0.3) 0%,
+        transparent 50%
+      ),
+      radial-gradient(
+        circle at 50% 50%,
+        rgba(6, 182, 212, 0.2) 0%,
+        transparent 50%
+      );
+    animation: bgShift 20s ease-in-out infinite;
+  }
+}
+
+@keyframes bgShift {
+  0%,
+  100% {
+    transform: scale(1) rotate(0deg);
+  }
+  33% {
+    transform: scale(1.1) rotate(120deg);
+  }
+  66% {
+    transform: scale(0.9) rotate(240deg);
+  }
+}
+
+// Floating Particles
+.floating-particles {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+
+  .particle {
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: linear-gradient(45deg, $primary-color, $secondary-color);
+    animation: float 15s infinite ease-in-out;
+
+    @for $i from 1 through 20 {
+      &.particle-#{$i} {
+        left: random(100) * 1%;
+        top: random(100) * 1%;
+        animation-delay: random(15) * 1s;
+        animation-duration: (10 + random(10)) * 1s;
+      }
+    }
+  }
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) scale(1);
+    opacity: 0.7;
+  }
+  50% {
+    transform: translateY(-20px) scale(1.2);
+    opacity: 1;
+  }
+}
+
+// Login Wrapper
+.login-wrapper {
+  position: relative;
+  z-index: 10;
+  max-width: 550px;
+  width: 100%;
+  animation: slideInUp 1s ease-out;
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+// Login Card
+.login-card {
+  @include glass-morphism;
+  padding: 40px;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(
+      90deg,
+      $primary-color,
+      $secondary-color,
+      $accent-color
+    );
+    border-radius: 20px 20px 0 0;
+  }
+}
+
+// Logo Section
+.logo-section {
+  text-align: center;
+  margin-bottom: 40px;
+  animation: fadeInDown 1s ease-out 0.3s both;
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.dna-logo {
+  display: inline-block;
+  margin-bottom: 20px;
+  animation: rotateDNA 20s linear infinite;
+}
+
+@keyframes rotateDNA {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.dna-icon {
+  width: 60px;
+  height: 60px;
+
+  .dna-strand-left,
+  .dna-strand-right {
+    fill: none;
+    stroke: $primary-color;
+    stroke-width: 2;
+    stroke-linecap: round;
+  }
+
+  .dna-strand-right {
+    stroke: $accent-color;
+  }
+
+  .base-pair {
+    fill: $secondary-color;
+    animation: pulse 2s ease-in-out infinite;
+  }
+
+  .connection {
+    stroke: $text-secondary;
+    stroke-width: 1;
+    opacity: 0.6;
+  }
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.6;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.company-title {
+  @include gradient-text;
+  font-size: 2.5rem;
+  font-weight: 700;
+  margin: 0 0 8px 0;
+  letter-spacing: -0.025em;
+}
+
+.company-subtitle {
+  color: $text-secondary;
+  font-size: 1rem;
+  margin: 0;
+  font-weight: 400;
+}
+
+// Form Styles
+.login-form {
+  animation: fadeInUp 1s ease-out 0.6s both;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.form-group {
+  margin-bottom: 24px;
+}
+
+.input-wrapper {
+  position: relative;
+  background: none;
+  padding: 15px 0;
+}
+
+.form-input {
+  width: 100%;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: $text-primary;
+  font-size: 16px;
+  border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+
+  &:focus {
+    border-bottom-color: $primary-color;
+
+    + .form-label {
+      transform: translateY(-20px) scale(0.8);
+      color: $accent-color;
+    }
+
+    ~ .input-line {
+      transform: scaleX(1);
+    }
+  }
+
+  &:not(:placeholder-shown) + .form-label {
+    transform: translateY(-20px) scale(0.8);
+    color: $accent-color;
+  }
+
+  &:valid:not(:placeholder-shown) + .form-label {
+    color: $accent-color;
+  }
+}
+
+.form-label {
+  position: absolute;
+  top: 16px;
+  left: 0;
+  color: $text-secondary;
+  font-size: 16px;
+  pointer-events: none;
+  transition: all 0.3s ease;
+  transform-origin: left top;
+}
+
+.input-line {
+  position: absolute;
+  bottom: 10;
+  left: 0;
+  width: 100%;
+  height: 2px;
+  background: linear-gradient(90deg, $primary-color, $accent-color);
+  transform: scaleX(0);
+  transition: transform 0.3s ease;
+}
+
+.password-toggle {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  color: $text-secondary;
+  cursor: pointer;
+  padding: 8px;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $primary-color;
+  }
+
+  .eye-icon {
+    width: 20px;
+    height: 20px;
+    fill: currentColor;
+  }
+}
+
+// Form Options
+.form-options {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+  font-size: 14px;
+}
+
+.checkbox-wrapper {
+  display: flex;
+  align-items: center;
+  cursor: pointer;
+  color: $text-secondary;
+
+  input[type="checkbox"] {
+    display: none;
+    &:checked + .checkmark {
+      background: linear-gradient(45deg, $primary-color, $secondary-color);
+      border: 1px solid black;
+      &::after {
+        opacity: 1;
+        transform: rotate(45deg) scale(1);
+      }
+    }
+  }
+}
+
+.checkmark {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(73, 73, 73, 0.458);
+  border-radius: 4px;
+  margin-right: 8px;
+  position: relative;
+  transition: all 0.3s ease;
+
+  &::after {
+    content: "";
+    position: absolute;
+    left: 30%;
+    top: 10%;
+    width: 6px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: translate(-50%, -50%) rotate(45deg) scale(0);
+    opacity: 0;
+    transition: all 0.3s ease;
+  }
+}
+
+.forgot-password {
+  color: $text-secondary;
+  text-decoration: none;
+  transition: color 0.3s ease;
+
+  &:hover {
+    color: $primary-color;
+  }
+}
+
+// Login Button
+.login-btn {
+  width: 100%;
+  padding: 16px;
+  background: linear-gradient(135deg, $primary-color, $secondary-color);
+  border: none;
+  border-radius: 12px;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  margin-bottom: 24px;
+
+  &:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 30px rgba(99, 102, 241, 0.4);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  &.loading {
+    .btn-text {
+      opacity: 0;
+    }
+
+    .btn-loading {
+      opacity: 1;
+    }
+  }
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+    transition: left 0.6s ease;
+  }
+
+  &:hover::before {
+    left: 100%;
+  }
+}
+
+.btn-text {
+  transition: opacity 0.3s ease;
+}
+
+.btn-loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.spinner {
+  width: 20px;
+  height: 20px;
+  border: 2px solid rgba(255, 255, 255, 0.3);
+  border-top: 2px solid white;
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+// Divider
+.divider {
+  text-align: center;
+  margin: 24px 0;
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(
+      90deg,
+      transparent,
+      rgba(255, 255, 255, 0.2),
+      transparent
+    );
+  }
+
+  span {
+    background: $glass-bg;
+    padding: 0 16px;
+    color: $text-secondary;
+    font-size: 14px;
+  }
+}
+
+// Social Login
+.social-login {
+  margin-bottom: 24px;
+}
+
+.social-btn {
+  width: 100%;
+  padding: 12px;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 12px;
+  color: $text-primary;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.15);
+    transform: translateY(-1px);
+  }
+
+  .social-icon {
+    width: 20px;
+    height: 20px;
+  }
+}
+
+// Signup Link
+.signup-link {
+  text-align: center;
+  color: $text-secondary;
+  font-size: 14px;
+
+  a {
+    color: $primary-color;
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+
+    &:hover {
+      color: $accent-color;
+    }
+  }
+}
+
+// Loading Overlay
+.loading-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(15, 15, 35, 0.9);
+  backdrop-filter: blur(10px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+
+  &.active {
+    opacity: 1;
+    visibility: visible;
+  }
+}
+
+.dna-loading {
+  text-align: center;
+  color: $text-primary;
+}
+
+.dna-spinner {
+  display: inline-block;
+  position: relative;
+
+  .spinner-helix {
+    width: 60px;
+    height: 60px;
+    border: 3px solid rgba(99, 102, 241, 0.3);
+    border-top: 3px solid $primary-color;
+    border-bottom: 3px solid $accent-color;
+    border-radius: 50%;
+    animation: helixSpin 2s linear infinite;
+    margin: 0 auto 16px;
+  }
+
+  .spinner-text {
+    font-size: 16px;
+    font-weight: 500;
+    color: $text-secondary;
+  }
+}
+
+@keyframes helixSpin {
+  0% {
+    transform: rotate(0deg) scale(1);
+  }
+  50% {
+    transform: rotate(180deg) scale(1.1);
+  }
+  100% {
+    transform: rotate(360deg) scale(1);
+  }
+}
+
+// Responsive Design
+@media (max-width: 768px) {
+  .dna-login-container {
+    padding: 16px;
+  }
+
+  .login-card {
+    padding: 24px;
+  }
+
+  .company-title {
+    font-size: 2rem;
+  }
+
+  .dna-helix {
+    display: none;
+  }
+
+  .floating-particles {
+    .particle {
+      width: 4px;
+      height: 4px;
+    }
+  }
+}
+
+@media (max-width: 480px) {
+  .form-options {
+    flex-direction: column;
+    gap: 12px;
+    align-items: flex-start;
+  }
+
+  .company-title {
+    font-size: 1.75rem;
+  }
+}

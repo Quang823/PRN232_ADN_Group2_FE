@@ -1,0 +1,112 @@
+.bulk-actions-card {
+  background: linear-gradient(to right, #6b46c1, #d53f8c); // Purple gradient similar to the image
+  color: white;
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+
+  .bulk-actions-content {
+    padding: 0.5rem;
+
+    .bulk-actions-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+
+      .selection-info {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .selected-count {
+          font-weight: 600;
+          font-size: 0.875rem;
+        }
+
+        .clear-selection-button {
+          color: white;
+          height: 1.5rem;
+          width: 1.5rem;
+          background: transparent;
+          border: none;
+          padding: 0;
+
+          &:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 50%;
+          }
+
+          .clear-icon {
+            width: 1rem;
+            height: 1rem;
+          }
+        }
+      }
+
+      .action-buttons {
+        display: flex;
+        align-items: center;
+        gap: 0.25rem;
+
+        .approve-button {
+          background: #10b981; // Green color for "Phê duyệt tất cả"
+          color: white;
+          border: none;
+          border-radius: 0.375rem;
+          padding: 0.25rem 0.75rem;
+          font-size: 0.875rem;
+
+          &:hover {
+            background: #059669;
+          }
+
+          .approve-icon {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.25rem;
+          }
+        }
+
+        .reject-button {
+          background: #6b46c1; // Purple color for "Từ chối tất cả"
+          color: white;
+          border: none;
+          border-radius: 0.375rem;
+          padding: 0.25rem 0.75rem;
+          font-size: 0.875rem;
+
+          &:hover {
+            background: #553c9a;
+          }
+
+          .reject-icon {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.25rem;
+          }
+        }
+
+        .export-button {
+          background: transparent;
+          color: white;
+          border: 1px solid white;
+          border-radius: 0.375rem;
+          padding: 0.25rem 0.75rem;
+          font-size: 0.875rem;
+
+          &:hover {
+            background: white;
+            color: #1e293b;
+          }
+
+          .export-icon {
+            width: 1rem;
+            height: 1rem;
+            margin-right: 0.25rem;
+          }
+        }
+      }
+    }
+  }
+}

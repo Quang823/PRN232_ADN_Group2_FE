@@ -1,0 +1,154 @@
+.dna-service-detail-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  margin-top: 60px;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 0;
+  background: linear-gradient(135deg, #4a90e2, #50c9c3);
+  color: white;
+  border-radius: 8px;
+  margin-bottom: 40px;
+}
+
+.header-title {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.header-subtitle {
+  font-size: 1.25rem;
+  opacity: 0.9;
+}
+
+.section-title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.video-section {
+  margin-bottom: 40px;
+}
+
+.video-wrapper {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 aspect ratio */
+  height: 0;
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.video-wrapper iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.info-section {
+  margin-bottom: 40px;
+}
+
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+}
+
+.info-item {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  text-align: center;
+  transition: transform 0.3s ease;
+}
+
+.info-item:hover {
+  transform: translateY(-5px);
+}
+
+.info-item h3 {
+  font-size: 1.25rem;
+  color: #4a90e2;
+  margin-bottom: 10px;
+}
+
+.description-section {
+  margin-bottom: 40px;
+}
+
+.description-text {
+  font-size: 1.1rem;
+  color: #555;
+  line-height: 1.6;
+  margin-bottom: 15px;
+}
+
+.benefits-section {
+  margin-bottom: 40px;
+}
+
+.benefits-list {
+  list-style: none;
+  padding: 0;
+}
+
+.benefits-list li {
+  font-size: 1.1rem;
+  color: #333;
+  padding: 10px 0;
+  position: relative;
+  padding-left: 30px;
+}
+
+.benefits-list li::before {
+  content: "✔";
+  position: absolute;
+  left: 0;
+  color: #50c9c3;
+  font-weight: bold;
+}
+
+.cta-section {
+  text-align: center;
+  padding: 40px 0;
+  background: #f9f9f9;
+  border-radius: 8px;
+}
+
+.cta-button {
+  background: #4a90e2;
+  color: white;
+  border: none;
+  padding: 15px 30px;
+  font-size: 1.25rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.cta-button:hover {
+  background: #357abd;
+}
+
+@media (max-width: 768px) {
+  .header-title {
+    font-size: 2rem;
+  }
+
+  .section-title {
+    font-size: 1.75rem;
+  }
+
+  .video-wrapper {
+    padding-bottom: 75%; /* Adjust for mobile */
+  }
+}

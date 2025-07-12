@@ -1,0 +1,285 @@
+.staff-dashboard {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  padding: 24px;
+  background-color: #f8fafc;
+  min-height: 100vh;
+  color: #1f2937;
+
+  .staff-welcome-section {
+    position: relative;
+    margin-bottom: 32px;
+    border-radius: 16px;
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+
+    .staff-welcome-overlay {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      opacity: 0.95;
+      z-index: 0;
+    }
+
+    .staff-welcome-content {
+      position: relative;
+      z-index: 1;
+      padding: 32px;
+      color: white;
+
+      .staff-welcome-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin: 0 0 12px;
+        text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      }
+
+      .staff-welcome-text {
+        font-size: 16px;
+        margin: 0 0 20px;
+        opacity: 0.9;
+        font-weight: 500;
+      }
+
+      .staff-welcome-stats {
+        display: flex;
+        gap: 24px;
+
+        .staff-welcome-stat {
+          display: flex;
+          align-items: center;
+          gap: 10px;
+          font-size: 14px;
+          font-weight: 600;
+          padding: 8px 16px;
+          background: rgba(255, 255, 255, 0.15);
+          border-radius: 8px;
+          backdrop-filter: blur(10px);
+
+          .staff-welcome-icon {
+            width: 18px;
+            height: 18px;
+          }
+        }
+      }
+    }
+  }
+
+  .staff-stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 24px;
+    margin-bottom: 32px;
+
+    .staff-stats-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+      }
+
+      &:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+      }
+
+      .staff-card-header {
+        margin-bottom: 20px;
+
+        .staff-card-title {
+          font-size: 15px;
+          color: #6b7280;
+          margin: 0;
+          font-weight: 600;
+        }
+      }
+
+      .staff-card-body {
+        position: relative;
+
+        .staff-stat-value {
+          font-size: 15px;
+          font-weight: 800;
+          color: #1f2937;
+          margin-bottom: 12px;
+          line-height: 1.2;
+        }
+
+        .staff-stats-trend {
+          font-size: 13px;
+          color: #6b7280;
+          font-weight: 500;
+          margin-bottom: 16px;
+        }
+
+        .staff-stats-icon {
+          position: absolute;
+          top: 0;
+          right: 0;
+          width: 48px;
+          height: 48px;
+          padding: 12px;
+          border-radius: 12px;
+          box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+          background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+          color: #2563eb;
+        }
+      }
+    }
+  }
+
+  .staff-approvals-section {
+    .staff-approval-card {
+      background: linear-gradient(135deg, #ffffff 0%, #f8fafc 100%);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      border: 1px solid #e5e7eb;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+
+      &::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #3b82f6, #8b5cf6, #06b6d4);
+      }
+
+      &:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+      }
+
+      .staff-card-header {
+        margin-bottom: 24px;
+
+        .staff-card-title {
+          font-size: 20px;
+          font-weight: 700;
+          color: #1f2937;
+          margin: 0;
+          position: relative;
+
+          &::after {
+            content: "";
+            position: absolute;
+            bottom: -8px;
+            left: 0;
+            width: 40px;
+            height: 3px;
+            background: linear-gradient(90deg, #3b82f6, #8b5cf6);
+            border-radius: 2px;
+          }
+        }
+      }
+
+      .staff-card-body {
+        .staff-approval-list {
+          .staff-approval-item {
+            display: flex;
+            align-items: center;
+            padding: 16px 0;
+            border-bottom: 1px solid #f3f4f6;
+            transition: all 0.2s ease;
+
+            &:last-child {
+              border-bottom: none;
+            }
+
+            &:hover {
+              background: rgba(59, 130, 246, 0.05);
+              margin: 0 -16px;
+              padding: 16px;
+              border-radius: 8px;
+            }
+
+            .staff-user-info {
+              display: flex;
+              align-items: center;
+              flex-grow: 1;
+
+              .staff-user-avatar {
+                width: 40px;
+                height: 40px;
+                background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+                color: white;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                border-radius: 50%;
+                font-weight: 700;
+                margin-right: 16px;
+                box-shadow: 0 4px 12px rgba(139, 92, 246, 0.3);
+                font-size: 16px;
+              }
+
+              .staff-user-details {
+                .staff-user-name {
+                  font-size: 15px;
+                  color: #1f2937;
+                  margin: 0 0 6px;
+                  font-weight: 600;
+                }
+
+                .staff-user-status {
+                  font-size: 13px;
+                  color: #6b7280;
+                  margin: 0 0 4px;
+                  font-weight: 500;
+                }
+
+                .staff-user-time {
+                  font-size: 12px;
+                  color: #9ca3af;
+                  font-weight: 500;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .stats-grid {
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    }
+
+    .welcome-stats {
+      flex-direction: column;
+      gap: 12px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 16px;
+
+    .welcome-content {
+      padding: 24px;
+    }
+
+    .stats-grid {
+      grid-template-columns: 1fr;
+    }
+  }
+}

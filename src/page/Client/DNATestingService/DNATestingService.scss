@@ -1,0 +1,804 @@
+.dna-service-landing {
+  display: flex;
+  min-height: 100vh;
+  background: linear-gradient(135deg, #0f0f23 0%, #1a1a2e 50%, #16213e 100%);
+  margin-top: 60px;
+}
+.dna-sidebar {
+  min-width: 220px;
+  background: rgba(48, 42, 93, 0.98);
+  border-right: 1px solid rgba(255, 255, 255, 0.07);
+  padding: 32px 18px 32px 18px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 32px;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  z-index: 10;
+}
+.sidebar-title {
+  font-size: 1.3rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+.dna-sidebar ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+.dna-sidebar li {
+  margin-bottom: 10px;
+}
+.dna-sidebar button {
+  width: 100%;
+  background: none;
+  border: none;
+  color: #fff;
+  font-size: 1.05rem;
+  padding: 10px 0 10px 8px;
+  text-align: left;
+  border-radius: 8px;
+  transition: background 0.18s, color 0.18s;
+  cursor: pointer;
+}
+.dna-sidebar button:hover {
+  background: #8b5cf6;
+  color: #fff;
+}
+
+.dna-main-content {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 32px 16px 32px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 48px;
+}
+.dna-section {
+  background: rgba(255, 255, 255, 0.04);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(80, 80, 120, 0.1);
+  padding: 32px 24px 28px 24px;
+  margin-bottom: 0;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+.dna-section h2 {
+  font-size: 1.45rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+.dna-overview-img {
+  margin: 24px 0 0 0;
+  text-align: center;
+}
+.dna-overview-img img {
+  max-width: 320px;
+  border-radius: 16px;
+  box-shadow: 0 2px 16px rgba(139, 92, 246, 0.13);
+}
+.dna-process-steps {
+  display: flex;
+  gap: 32px;
+  justify-content: space-between;
+  margin-top: 18px;
+  flex-wrap: wrap;
+}
+.dna-process-step {
+  flex: 1 1 120px;
+  min-width: 120px;
+  background: rgba(139, 92, 246, 0.08);
+  border-radius: 12px;
+  padding: 18px 10px 14px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 1px 6px rgba(139, 92, 246, 0.07);
+}
+.step-icon {
+  color: #8b5cf6;
+  font-size: 2.1rem;
+  margin-bottom: 4px;
+}
+.step-label {
+  color: #fff;
+  font-weight: 500;
+  text-align: center;
+}
+.dna-sample-list {
+  margin: 0;
+  padding-left: 18px;
+  color: #a1a1aa;
+  font-size: 1.08rem;
+}
+.dna-reasons {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 18px;
+}
+.dna-reason-card {
+  flex: 1 1 180px;
+  min-width: 180px;
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 12px;
+  padding: 18px 14px 14px 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  box-shadow: 0 1px 6px rgba(139, 92, 246, 0.07);
+}
+.reason-icon {
+  color: #8b5cf6;
+  font-size: 1.7rem;
+  margin-bottom: 2px;
+}
+.reason-title {
+  font-weight: 600;
+  color: #fff;
+  font-size: 1.08rem;
+}
+.reason-desc {
+  color: #a1a1aa;
+  font-size: 0.98rem;
+}
+.dna-faq-list {
+  margin-top: 10px;
+}
+.dna-faq-item {
+  margin-bottom: 12px;
+}
+.faq-question {
+  background: none;
+  border: none;
+  color: #8b5cf6;
+  font-size: 1.08rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 0;
+  text-align: left;
+  transition: color 0.18s;
+}
+.faq-question:hover {
+  color: #fff;
+}
+.faq-answer {
+  margin-top: 6px;
+  color: #fff;
+  background: rgba(139, 92, 246, 0.1);
+  border-radius: 8px;
+  padding: 10px 14px;
+  font-size: 0.98rem;
+}
+.dna-contact-section {
+  text-align: center;
+}
+.dna-contact-box {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  margin-top: 16px;
+  font-size: 1.08rem;
+}
+.dna-contact-box a {
+  color: #8b5cf6;
+  text-decoration: underline;
+}
+.dna-booking-message {
+  margin: 12px 0;
+  color: #e94560;
+  font-weight: 500;
+  text-align: center;
+}
+.dna-modal-body label {
+  display: block;
+  margin: 16px 0 8px 0;
+  font-weight: 500;
+}
+.dna-modal-body input[type="datetime-local"] {
+  width: 100%;
+  padding: 8px 12px;
+  border: 1px solid #22223b;
+  border-radius: 6px;
+  font-size: 1rem;
+  color: #111;
+  background: #fff;
+  margin-top: 4px;
+  margin-bottom: 8px;
+}
+.dna-modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 16px;
+}
+.dna-modal-actions button.primary-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.dna-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+}
+.dna-modal {
+  background: rgba(75, 60, 147, 0.574);
+  backdrop-filter: blur(100px);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.18),
+    0 2px 8px rgba(99, 102, 241, 0.1);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 520px;
+  width: 100%;
+  color: #fff;
+  position: relative;
+  margin: 0 auto;
+}
+@keyframes dnaModalSlideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95) translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}
+.dna-modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 1.5rem 1rem 1.5rem;
+  border-bottom: 1px solid #e5e7eb;
+}
+.dna-modal-header h2 {
+  color: #8b5cf6;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+.dna-modal-close {
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+  color: #6b7280;
+  padding: 0.5rem;
+  border-radius: 0.5rem;
+  transition: all 0.3s ease;
+}
+.dna-modal-close:hover {
+  background: #e6f0fa;
+  color: #1e40af;
+}
+.dna-modal-body {
+  padding: 1.5rem;
+}
+.dna-modal-body label,
+.dna-modal-body b {
+  color: #a5b4fc;
+  font-size: 1.08rem;
+  font-weight: 700;
+}
+.dna-modal-body p,
+.dna-modal-body .dna-booking-message,
+.dna-datepicker-hint {
+  color: #e0e7ff;
+  font-size: 1.05rem;
+}
+.dna-modal-body input[type="datetime-local"] {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  border: 2px solid #e5e7eb;
+  border-radius: 0.5rem;
+  font-size: 1rem;
+  color: #181836;
+  background: #f9fafb;
+  margin-top: 4px;
+  margin-bottom: 16px;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.dna-modal-body input[type="datetime-local"]:focus {
+  border-color: #3b82f6;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+.dna-booking-message {
+  background: #fef2f2;
+  border: 1px solid #fecaca;
+  color: #dc2626;
+  padding: 0.75rem 1rem;
+  border-radius: 0.5rem;
+  margin-bottom: 1rem;
+  font-size: 0.95rem;
+  text-align: center;
+}
+.dna-modal-actions {
+  display: flex;
+  gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 1.5rem;
+}
+.dna-modal-actions button {
+  font-size: 1.08rem;
+  padding: 0.85rem 2.2rem;
+  border-radius: 0.75rem;
+  font-weight: 600;
+  border: none;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+.dna-modal-actions .primary-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  color: #fff;
+}
+.dna-modal-actions .primary-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(59, 130, 246, 0.15);
+}
+.dna-modal-actions button:not(.primary-btn) {
+  background: #e6f0fa;
+  color: #1e40af;
+}
+.dna-modal-actions button:not(.primary-btn):hover {
+  background: #bfdbfe;
+}
+.dna-modal-actions .primary-btn[disabled] {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+.dna-service-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 2rem;
+}
+.dna-service-card {
+  background: rgba(138, 92, 246, 0.232);
+  backdrop-filter: blur(60px);
+  border-radius: 1.25rem;
+  box-shadow: 0 4px 24px rgba(30, 64, 175, 0.1),
+    0 1.5px 6px rgba(99, 102, 241, 0.08);
+  padding: 2rem 1.5rem 1.5rem 1.5rem;
+  color: #fff;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  transition: box-shadow 0.2s, transform 0.2s, background 0.2s;
+  border: 1.5px solid rgba(139, 92, 246, 0.18);
+  position: relative;
+}
+.dna-service-card:hover {
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.18),
+    0 2px 8px rgba(99, 102, 241, 0.1);
+  transform: translateY(-4px) scale(1.02);
+  border-color: #8b5cf6;
+  background: rgba(139, 92, 246, 0.18);
+}
+.dna-service-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 0.5rem;
+}
+.dna-service-header h3 {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #8b5cf6;
+  margin: 0;
+}
+.dna-service-type {
+  background: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  padding: 0.25rem 0.75rem;
+  border-radius: 0.75rem;
+  margin-left: 0.5rem;
+  letter-spacing: 0.5px;
+  box-shadow: 0 1px 4px rgba(99, 102, 241, 0.1);
+}
+.dna-service-desc {
+  color: #e0e7ff;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  min-height: 48px;
+}
+.dna-service-info {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-bottom: 1.25rem;
+  font-size: 1rem;
+}
+.dna-service-price {
+  font-weight: 700;
+  color: #a5b4fc;
+}
+.dna-service-homekit {
+  font-size: 0.95rem;
+  color: #38bdf8;
+  font-weight: 500;
+}
+.dna-service-actions {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+}
+.dna-service-actions button {
+  flex: 1 1 0;
+}
+@media (max-width: 700px) {
+  .dna-service-list {
+    grid-template-columns: 1fr;
+    gap: 1.25rem;
+  }
+  .dna-service-card {
+    padding: 1.25rem 1rem 1rem 1rem;
+  }
+}
+@media (max-width: 900px) {
+  .dna-service-landing {
+    flex-direction: column;
+  }
+  .dna-sidebar {
+    flex-direction: row;
+    min-width: 0;
+    width: 100vw;
+    height: auto;
+    position: static;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    padding: 12px 8px;
+    gap: 12px;
+    align-items: center;
+    justify-content: flex-start;
+    overflow-x: auto;
+  }
+  .sidebar-title {
+    font-size: 1.1rem;
+    margin-bottom: 0;
+  }
+  .dna-sidebar ul {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+    width: auto;
+  }
+  .dna-sidebar li {
+    margin-bottom: 0;
+  }
+  .dna-sidebar button {
+    font-size: 0.98rem;
+    padding: 6px 10px;
+    border-radius: 6px;
+  }
+  .dna-main-content {
+    max-width: 100vh;
+    padding: 18px 2vw 24px 2vw;
+    gap: 32px;
+  }
+  .dna-section {
+    padding: 18px 8px 16px 8px;
+    border-radius: 12px;
+  }
+  .dna-overview-img img {
+    max-width: 90vw;
+  }
+  .dna-process-steps,
+  .dna-reasons {
+    gap: 12px;
+  }
+  .dna-reason-card,
+  .dna-process-step {
+    min-width: 120px;
+    padding: 10px 6px 8px 6px;
+  }
+}
+.dna-service-detail-page {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: none;
+  padding: 40px 0;
+}
+.dna-detail-card {
+  background: rgba(139, 92, 246, 0.13);
+  backdrop-filter: blur(18px);
+  border-radius: 1.5rem;
+  box-shadow: 0 8px 32px rgba(139, 92, 246, 0.18),
+    0 2px 8px rgba(99, 102, 241, 0.1);
+  padding: 2.5rem 2rem 2rem 2rem;
+  max-width: 540px;
+  width: 100%;
+  color: #fff;
+  position: relative;
+  margin: 0 auto;
+}
+.dna-detail-back {
+  position: absolute;
+  top: 18px;
+  left: 24px;
+  background: none;
+  border: none;
+  color: #8b5cf6;
+  font-size: 1.1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: color 0.18s;
+  z-index: 2;
+}
+.dna-detail-back:hover {
+  color: #fff;
+  text-decoration: underline;
+}
+.dna-detail-header {
+  display: flex;
+  align-items: flex-start;
+  gap: 1.5rem;
+  margin-bottom: 1.5rem;
+}
+.dna-detail-img {
+  width: 120px;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 1rem;
+  box-shadow: 0 2px 12px rgba(139, 92, 246, 0.13);
+  background: #fff;
+}
+.dna-detail-title-group {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  justify-content: center;
+}
+.dna-detail-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #8b5cf6;
+  margin: 0;
+}
+.dna-detail-type {
+  background: linear-gradient(135deg, #6366f1 0%, #06b6d4 100%);
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 600;
+  padding: 0.25rem 0.9rem;
+  border-radius: 0.75rem;
+  display: inline-block;
+  margin-top: 0.25rem;
+  box-shadow: 0 1px 4px rgba(99, 102, 241, 0.1);
+}
+.dna-detail-body {
+  margin-bottom: 1.5rem;
+}
+.dna-detail-body h3 {
+  color: #a5b4fc;
+  font-size: 1.08rem;
+  margin: 1.1rem 0 0.3rem 0;
+  font-weight: 700;
+}
+.dna-detail-body p {
+  color: #e0e7ff;
+  margin-bottom: 0.5rem;
+}
+.dna-detail-video {
+  margin-top: 1.2rem;
+  border-radius: 1rem;
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(139, 92, 246, 0.13);
+}
+.dna-detail-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+.dna-detail-actions .primary-btn {
+  background: linear-gradient(135deg, #3b82f6 0%, #1e40af 100%);
+  color: #fff;
+  padding: 0.75rem 2rem;
+  border-radius: 0.75rem;
+  font-weight: 700;
+  font-size: 1.08rem;
+  border: none;
+  cursor: pointer;
+  transition: background 0.18s, transform 0.18s;
+}
+.dna-detail-actions .primary-btn:hover {
+  background: linear-gradient(135deg, #2563eb 0%, #1e3a8a 100%);
+  transform: translateY(-2px);
+}
+@media (max-width: 700px) {
+  .dna-detail-card {
+    padding: 1.2rem 0.5rem 1rem 0.5rem;
+    max-width: 98vw;
+  }
+  .dna-detail-header {
+    flex-direction: column;
+    align-items: center;
+    gap: 0.7rem;
+  }
+  .dna-detail-img {
+    width: 90px;
+    height: 90px;
+  }
+  .dna-detail-title {
+    font-size: 1.1rem;
+  }
+}
+.dna-datepicker-input {
+  font-size: 1.08rem;
+  border-radius: 0.75rem;
+  padding: 0.85rem 1.2rem;
+  background: #fff;
+  color: #181836;
+  border: 2px solid #a5b4fc;
+  font-weight: 600;
+}
+.dna-datepicker-input:focus {
+  border-color: #8b5cf6;
+}
+.react-datepicker-popper {
+  z-index: 2000 !important;
+}
+.dna-datepicker-calendar {
+  border-radius: 1rem;
+  box-shadow: 0 4px 24px rgba(139, 92, 246, 0.13);
+  font-size: 1rem;
+}
+
+// --- Đồng bộ style modal booking với ServiceDashboard ---
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal.service-modal {
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  padding: 36px 32px 28px 32px;
+  min-width: 480px;
+  max-width: 95vw;
+  min-height: 200px;
+  position: relative;
+  animation: modalShow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #111;
+}
+
+@keyframes modalShow {
+  from {
+    transform: translateY(40px) scale(0.95);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 18px;
+  width: 100%;
+}
+
+.modal-close-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  border-radius: 50%;
+  transition: background 0.2s;
+  font-size: 1.5rem;
+  color: #888;
+}
+.modal-close-btn:hover {
+  background: #f3f4f6;
+}
+
+.service-form {
+  width: 100%;
+}
+.service-form label {
+  display: block;
+  margin-bottom: 16px;
+  font-weight: 500;
+  color: #111;
+}
+.service-form input,
+.service-form .dna-datepicker-input {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1.5px solid #e5e7eb;
+  border-radius: 7px;
+  margin-top: 6px;
+  font-size: 1rem;
+  background: #f9fafb;
+  transition: border 0.2s, box-shadow 0.2s;
+  color: #222 !important;
+  box-sizing: border-box;
+}
+.service-form input:focus,
+.service-form .dna-datepicker-input:focus {
+  border: 1.5px solid #222;
+  outline: none;
+  color: #111 !important;
+  background: #fff;
+}
+.service-form .dna-datepicker-input::placeholder,
+.service-form input::placeholder {
+  color: #888;
+  opacity: 1;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 14px;
+  margin-top: 20px;
+}
+.cancel-btn,
+.submit-btn {
+  padding: 10px 24px;
+  border-radius: 7px;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 1rem;
+  flex: 1 1 0;
+  min-width: 120px;
+  max-width: 100%;
+  text-align: center;
+}
+.cancel-btn {
+  background: #f3f4f6;
+  color: #374151;
+}
+.submit-btn {
+  background: #6366f1;
+  color: #fff;
+  transition: background 0.2s;
+}
+.submit-btn:disabled {
+  background: #a5b4fc;
+  cursor: not-allowed;
+}
