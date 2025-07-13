@@ -1,0 +1,441 @@
+@use "sass:math";
+
+// Custom variables cho theme màu sắc
+$primary-color: #6366f1;
+$secondary-color: #22c55e;
+$danger-color: #ef4444;
+$background-color: #f9fafb;
+$text-color: #1f2937;
+$border-color: #e5e7eb;
+$hover-bg: #f3f4f6;
+$shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+$border-radius: 8px;
+$transition: all 0.2s ease;
+
+// Reset và base styles
+.ap-container {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 24px;
+  background-color: $background-color;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  font-family: "Inter", sans-serif;
+}
+
+// Header actions
+.ap-header-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.ap-search-section {
+  display: flex;
+  align-items: center;
+}
+
+.ap-table-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: $text-color;
+}
+
+.ap-action-buttons {
+  display: flex;
+  gap: 16px;
+}
+
+.ap-filter-select {
+  padding: 8px 16px;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  font-size: 14px;
+  color: $text-color;
+  background-color: #fff;
+  min-width: 150px;
+  transition: $transition;
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+  }
+}
+
+// Date picker
+.appointment-date-search {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 24px;
+}
+
+.appointment-date-search label {
+  font-size: 14px;
+  font-weight: 500;
+  color: $text-color;
+}
+
+.ap-filter-select {
+  &.react-datepicker__input-container input {
+    padding: 8px 16px;
+    border: 1px solid $border-color;
+    border-radius: 6px;
+    font-size: 14px;
+    color: $text-color;
+    width: 180px;
+    background-color: #fff; // Đảm bảo nền trắng cho DatePicker
+    transition: $transition;
+    &:focus {
+      outline: none;
+      border-color: $primary-color;
+      box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+    }
+  }
+}
+
+// Table styles
+.ap-table-card {
+  background-color: #fff;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  overflow: hidden;
+}
+
+.ap-table-header {
+  background-color: #f8fafc;
+  padding: 16px;
+  border-bottom: 1px solid $border-color;
+}
+
+.ap-table-wrapper {
+  overflow-x: auto;
+}
+
+.ap-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.ap-table-row-header {
+  background-color: #f8fafc;
+}
+
+.ap-table-header-cell {
+  padding: 16px 24px;
+  text-align: left;
+  font-size: 12px;
+  font-weight: 600;
+  color: #6b7280;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.ap-table-row {
+  border-top: 1px solid $border-color;
+  transition: $transition;
+  &:hover {
+    background-color: $hover-bg;
+  }
+}
+
+.ap-table-cell {
+  padding: 16px 24px;
+  font-size: 14px;
+  color: $text-color;
+}
+
+// Status badges
+.status-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.status-pending {
+  background-color: #fef3c7;
+  color: #d97706;
+}
+
+.status-waiting {
+  background-color: #dbeafe;
+  color: #1e40af;
+}
+
+.status-inprogress {
+  background-color: #e0e7ff;
+  color: #4338ca;
+}
+
+.status-completed {
+  background-color: #d1fae5;
+  color: #047857;
+}
+
+.status-collected {
+  background-color: #ede9fe;
+  color: #6d28d9;
+}
+
+.homekit-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: #e0e7ff;
+  color: #4338ca;
+}
+
+.onsite-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 500;
+  background-color: #f3f4f6;
+  color: #4b5563;
+}
+
+// Loading animation
+.ap-table-loading {
+  padding: 16px;
+}
+
+.ap-loading-pulse {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
+.ap-loading-avatar {
+  width: 32px;
+  height: 32px;
+  background-color: #e5e7eb;
+  border-radius: 50%;
+}
+
+.ap-loading-text {
+  flex: 1;
+}
+
+.ap-loading-line {
+  height: 16px;
+  background-color: #e5e7eb;
+  border-radius: 4px;
+}
+
+.ap-loading-line-short {
+  width: 33%;
+}
+
+.ap-loading-line-medium {
+  width: 66%;
+  margin-top: 8px;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+}
+
+// Modal styles
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background-color: #fff;
+  border-radius: $border-radius;
+  box-shadow: $shadow;
+  padding: 24px;
+  max-height: 80vh;
+  overflow-y: auto;
+  min-width: 600px;
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid $border-color;
+  padding-bottom: 12px;
+}
+
+.modal-header h3 {
+  font-size: 20px;
+  font-weight: 600;
+  color: $text-color;
+}
+
+.modal-close-btn {
+  font-size: 20px;
+  color: #6b7280;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: $transition;
+  &:hover {
+    color: $text-color;
+  }
+}
+
+.appointment-modal-content {
+  padding: 16px 0;
+}
+
+.appointment-person-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  margin-bottom: 16px;
+}
+
+.appointment-person-avatar {
+  flex-shrink: 0;
+}
+
+.appointment-person-name {
+  font-size: 18px;
+  font-weight: 500;
+  color: $text-color;
+}
+
+.appointment-person-label {
+  font-size: 14px;
+  color: #6b7280;
+}
+
+.appointment-person-value {
+  font-weight: 500;
+  color: $text-color;
+}
+
+.submit-btn {
+  padding: 8px 24px;
+  background-color: $primary-color;
+  color: #fff;
+  border-radius: 6px;
+  border: none;
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: $transition;
+  &:hover {
+    background-color: darken($primary-color, 10%);
+  }
+  &:disabled {
+    background-color: #d1d5db;
+    cursor: not-allowed;
+  }
+}
+
+.appointment-modal-btn {
+  margin-top: 16px;
+}
+
+.blurred {
+  filter: blur(4px);
+}
+
+// Result modal form
+form.appointment-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+form label {
+  font-size: 14px;
+  font-weight: 500;
+  color: $text-color;
+}
+
+form select,
+form textarea {
+  width: 100%;
+  padding: 8px 16px;
+  border: 1px solid $border-color;
+  border-radius: 6px;
+  font-size: 14px;
+  color: $text-color;
+  background-color: #fff; // Đổi nền thành trắng
+  transition: $transition;
+  &:focus {
+    outline: none;
+    border-color: $primary-color;
+    box-shadow: 0 0 0 2px rgba($primary-color, 0.2);
+  }
+}
+
+.radio-group {
+  display: flex;
+  gap: 24px;
+  margin-top: 8px;
+}
+
+.radio-group label {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 14px;
+}
+
+.radio-group input {
+  width: 16px;
+  height: 16px;
+  accent-color: $primary-color;
+}
+
+.error {
+  color: $danger-color;
+  font-size: 14px;
+  font-weight: 500;
+}
+
+// Responsive adjustments
+@media (max-width: 768px) {
+  .ap-container {
+    padding: 16px;
+  }
+
+  .ap-header-actions {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .ap-action-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  .ap-filter-select {
+    width: 100%;
+  }
+
+  .modal {
+    width: 95%;
+    min-width: 0;
+  }
+}

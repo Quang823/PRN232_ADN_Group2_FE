@@ -1,6 +1,62 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
+import { fetchServiceById } from "../../../service/dnaServiceService";
 import "./DNATestingServiceDetail.scss";
-const DNAServiceDetail = () => {
+
+const DNATestingServiceDetail = () => {
+  const { id: serviceId } = useParams();
+  const [service, setService] = useState(null);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState("");
+  const [feedbacks, setFeedbacks] = useState([]); // Danh sách feedback
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setLoading(true);
+      setError("");
+      try {
+        const data = await fetchServiceById(serviceId);
+        console.log("data", data);
+        setService(data);
+        // Giả lập fetch danh sách feedback (thay bằng API thực tế)
+        const mockFeedbacks = [
+          {
+            id: 1,
+            text: "Dịch vụ rất tốt, đáng tiền!",
+            user: "User1",
+            date: "2025-07-12",
+          },
+          {
+            id: 2,
+            text: "Chất lượng ổn, nhưng cần cải thiện thời gian xử lý.",
+            user: "User2",
+            date: "2025-07-11",
+          },
+        ];
+        setFeedbacks(mockFeedbacks);
+      } catch (err) {
+        setError("Could not load service details.");
+      } finally {
+        setLoading(false);
+      }
+    };
+    if (serviceId) fetchData();
+  }, [serviceId]);
+
+  if (loading)
+    return (
+      <div className="dna-service-detail-container">
+        <div className="service-loading">Loading...</div>
+      </div>
+    );
+  if (error)
+    return (
+      <div className="dna-service-detail-container">
+        <div className="service-error">{error}</div>
+      </div>
+    );
+  if (!service) return null;
+
   return (
     <div className="dna-service-detail-container">
       <div className="animated-background">
@@ -14,96 +70,61 @@ const DNAServiceDetail = () => {
           <div className="helix-strand strand-2"></div>
         </div>
       </div>
-      {/* Header Section */}
       <header className="header">
-        <h1 className="header-title">DNA Analysis Service</h1>
-        <p className="header-subtitle">
-          Discover your origins and health insights through DNA
-        </p>
+        <h1 className="header-title">{service.name}</h1>
+        <p className="header-subtitle">{service.type}</p>
       </header>
-
-      {/* Video Section */}
-      <section className="video-section">
-        <h2 className="section-title">Service Introduction</h2>
-        <div className="video-wrapper">
-          <iframe
-            width="100%"
-            height="400"
-            src="https://www.youtube.com/embed/sample-video-id"
-            title="DNA Service Video"
-            frameBorder="0"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-            allowFullScreen
-          ></iframe>
-        </div>
-      </section>
-
-      {/* Information Section */}
-      <section className="info-section">
-        <h2 className="section-title">Service Information</h2>
-        <div className="info-grid">
-          <div className="info-item">
-            <h3>Processing Time</h3>
-            <p>3-5 business days</p>
+      <section className="service-main-info">
+        {service.url && (
+          <div className="service-img-wrapper">
+            <img src={service.url} alt={service.name} className="service-img" />
           </div>
-          <div className="info-item">
-            <h3>Accuracy</h3>
-            <p>99.9%</p>
+        )}
+        <div className="service-info-list">
+          <div className="service-info-item">
+            <span className="service-info-label">Description:</span>
+            <span className="service-info-value">{service.description}</span>
           </div>
-          <div className="info-item">
-            <h3>Method</h3>
-            <p>Advanced gene sequencing technology</p>
+          <div className="service-info-item">
+            <span className="service-info-label">Allow HomeKit:</span>
+            <span className="service-info-value">
+              {service.allowHomeKit ? "Yes" : "No"}
+            </span>
           </div>
-          <div className="info-item">
-            <h3>Support</h3>
-            <p>24/7 expert consultation</p>
+          <div className="service-info-item">
+            <span className="service-info-label">Price:</span>
+            <span className="service-info-value">
+              {service.price?.toLocaleString()} VND
+            </span>
+          </div>
+          <div className="service-info-item">
+            <span className="service-info-label">Created At:</span>
+            <span className="service-info-value">
+              {service.createdAt?.slice(0, 10)}
+            </span>
           </div>
         </div>
       </section>
-
-      {/* Description Section */}
-      <section className="description-section">
-        <h2 className="section-title">Service Description</h2>
-        <p className="description-text">
-          Our DNA analysis service provides deep insights into your genetic
-          origins, health risks, and personalized traits. Using cutting-edge
-          technology, we analyze your DNA sample to deliver a detailed,
-          easy-to-understand report, empowering you to make informed decisions
-          about your health and lifestyle.
-        </p>
-        <p className="description-text">
-          Our process includes at-home sample collection, analysis in an
-          internationally certified laboratory, and secure online result
-          delivery. You'll receive expert support to fully understand your
-          results.
-        </p>
-      </section>
-
-      {/* Benefits Section */}
-      <section className="benefits-section">
-        <h2 className="section-title">Service Benefits</h2>
-        <ul className="benefits-list">
-          <li>
-            Discover your ancestral origins from over 1,000 regions worldwide.
-          </li>
-          <li>
-            Identify potential genetic health risks for proactive prevention.
-          </li>
-          <li>
-            Personalize your nutrition and fitness plans based on your DNA.
-          </li>
-          <li>Receive a detailed report with a user-friendly interface.</li>
-          <li>Ensure data privacy with high-level encryption.</li>
-        </ul>
-      </section>
-
-      {/* CTA Section */}
-      <section className="cta-section">
-        <h2 className="section-title">Get Started Today</h2>
-        <button className="cta-button">Sign Up for the Service</button>
+      <section className="feedback-section">
+        <h2 className="section-title">Feedbacks</h2>
+        {feedbacks.length > 0 ? (
+          <div className="feedback-list">
+            {feedbacks.map((feedback) => (
+              <div key={feedback.id} className="feedback-item">
+                <p className="feedback-text">{feedback.text}</p>
+                <p className="feedback-meta">
+                  <span className="feedback-user">{feedback.user}</span> -{" "}
+                  <span className="feedback-date">{feedback.date}</span>
+                </p>
+              </div>
+            ))}
+          </div>
+        ) : (
+          <p className="no-feedback">No feedback available yet.</p>
+        )}
       </section>
     </div>
   );
 };
 
-export default DNAServiceDetail;
+export default DNATestingServiceDetail;

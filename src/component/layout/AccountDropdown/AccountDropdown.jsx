@@ -17,7 +17,7 @@ const AccountDropdown = ({ user, onLogout, mobile = false }) => {
         <div
           className="itc-user-dropdown__mobile-item"
           onClick={() => {
-            navigate("/client/profile");
+            navigate("/profile");
             closeDropdown();
           }}
         >
@@ -27,7 +27,7 @@ const AccountDropdown = ({ user, onLogout, mobile = false }) => {
         <div
           className="itc-user-dropdown__mobile-item"
           onClick={() => {
-            navigate("/client/appointmentHistory");
+            navigate("/appointmentHistory");
             closeDropdown();
           }}
         >
@@ -37,7 +37,7 @@ const AccountDropdown = ({ user, onLogout, mobile = false }) => {
         <div
           className="itc-user-dropdown__mobile-item"
           onClick={() => {
-            navigate("/client/paymenyHistory");
+            navigate("/paymenyHistory");
             closeDropdown();
           }}
         >
@@ -79,7 +79,7 @@ const AccountDropdown = ({ user, onLogout, mobile = false }) => {
           <div
             className="itc-user-dropdown__item"
             onClick={() => {
-              navigate("/client/profile");
+              navigate("/profile");
               closeDropdown();
             }}
           >
@@ -89,7 +89,7 @@ const AccountDropdown = ({ user, onLogout, mobile = false }) => {
           <div
             className="itc-user-dropdown__mobile-item"
             onClick={() => {
-              navigate("/client/appointmentHistory");
+              navigate("/appointmentHistory");
               closeDropdown();
             }}
           >
@@ -99,7 +99,7 @@ const AccountDropdown = ({ user, onLogout, mobile = false }) => {
           <div
             className="itc-user-dropdown__mobile-item"
             onClick={() => {
-              navigate("/client/paymenyHistory");
+              navigate("/paymenyHistory");
               closeDropdown();
             }}
           >

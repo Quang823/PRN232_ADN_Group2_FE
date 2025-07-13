@@ -51,6 +51,8 @@ const NewsBlog = () => {
         setSubmitting(false);
         return;
       }
+      // Log dữ liệu trước khi gọi API
+      console.log("Blog data gửi lên:", { ...form, userId: user.id });
       await createBlog({ ...form, userId: user.id });
       const data = await fetchBlogs();
       setBlogs(Array.isArray(data) ? data.reverse() : []);
@@ -103,59 +105,6 @@ const NewsBlog = () => {
               </p>
             </div>
 
-            <form
-              onSubmit={handleSubmit}
-              style={{
-                marginBottom: 32,
-                background: "rgba(255,255,255,0.07)",
-                borderRadius: 12,
-                padding: 24,
-              }}
-            >
-              <h3 style={{ marginBottom: 12 }}>Post a new blog</h3>
-              <input
-                name="title"
-                value={form.title}
-                onChange={handleChange}
-                placeholder="Title"
-                style={{
-                  width: "100%",
-                  marginBottom: 8,
-                  padding: 8,
-                  borderRadius: 6,
-                }}
-              />
-              <textarea
-                name="content"
-                value={form.content}
-                onChange={handleChange}
-                placeholder="Content"
-                rows={3}
-                style={{
-                  width: "100%",
-                  marginBottom: 8,
-                  padding: 8,
-                  borderRadius: 6,
-                }}
-              />
-              {error && (
-                <div style={{ color: "red", marginBottom: 8 }}>{error}</div>
-              )}
-              <button
-                type="submit"
-                disabled={submitting}
-                style={{
-                  padding: "8px 18px",
-                  borderRadius: 6,
-                  background: "#8b5cf6",
-                  color: "#fff",
-                  border: "none",
-                }}
-              >
-                {submitting ? "Posting..." : "Post Blog"}
-              </button>
-            </form>
-
             {loading ? (
               <div>Loading...</div>
             ) : (
@@ -165,6 +114,99 @@ const NewsBlog = () => {
                 ))}
               </div>
             )}
+
+            {/* Form tạo blog đẹp, đặt dưới danh sách blog */}
+            <form
+              onSubmit={handleSubmit}
+              className="create-blog-form"
+              style={{
+                margin: "48px auto 0",
+                maxWidth: 600,
+                background: "rgba(255,255,255,0.10)",
+                borderRadius: 18,
+                boxShadow: "0 8px 32px rgba(139,92,246,0.13)",
+                padding: 32,
+                backdropFilter: "blur(10px)",
+                border: "1.5px solid rgba(255,255,255,0.18)",
+                display: "flex",
+                flexDirection: "column",
+                gap: 18,
+              }}
+            >
+              <h3
+                style={{
+                  marginBottom: 8,
+                  fontSize: 22,
+                  fontWeight: 700,
+                  color: "#8b5cf6",
+                  textAlign: "center",
+                }}
+              >
+                Post a new blog
+              </h3>
+              <label style={{ fontWeight: 500, marginBottom: 4 }}>Title</label>
+              <input
+                name="title"
+                value={form.title}
+                onChange={handleChange}
+                placeholder="Enter blog title..."
+                style={{
+                  width: "100%",
+                  marginBottom: 8,
+                  padding: "14px 16px",
+                  borderRadius: 8,
+                  border: "1.5px solid #8b5cf6",
+                  fontSize: 16,
+                  background: "rgba(255,255,255,0.18)",
+                  color: "#23234a",
+                  outline: "none",
+                }}
+              />
+              <label style={{ fontWeight: 500, marginBottom: 4 }}>
+                Content
+              </label>
+              <textarea
+                name="content"
+                value={form.content}
+                onChange={handleChange}
+                placeholder="Write your blog content..."
+                rows={5}
+                style={{
+                  width: "100%",
+                  marginBottom: 8,
+                  padding: "14px 16px",
+                  borderRadius: 8,
+                  border: "1.5px solid #8b5cf6",
+                  fontSize: 16,
+                  background: "rgba(255,255,255,0.18)",
+                  color: "#23234a",
+                  outline: "none",
+                  resize: "vertical",
+                }}
+              />
+              {error && (
+                <div style={{ color: "red", marginBottom: 8 }}>{error}</div>
+              )}
+              <button
+                type="submit"
+                disabled={submitting}
+                style={{
+                  padding: "12px 0",
+                  borderRadius: 8,
+                  background: "#8b5cf6",
+                  color: "#fff",
+                  border: "none",
+                  fontWeight: 700,
+                  fontSize: 18,
+                  boxShadow: "0 2px 8px rgba(139,92,246,0.13)",
+                  cursor: submitting ? "not-allowed" : "pointer",
+                  marginTop: 8,
+                  transition: "background 0.2s",
+                }}
+              >
+                {submitting ? "Posting..." : "Post Blog"}
+              </button>
+            </form>
 
             <div className="blog-pagination">
               <button className="pagination-btn pagination-prev" disabled>

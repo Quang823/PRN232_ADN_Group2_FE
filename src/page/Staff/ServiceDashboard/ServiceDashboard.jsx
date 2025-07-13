@@ -7,6 +7,7 @@ import {
 } from "../../../service/dnaServiceService";
 import { Search, Plus, MoreHorizontal, X } from "lucide-react";
 import "./ServiceDashboard.scss";
+import { uploadToCloudinaryService } from "../../../service/uploadToCloudinaryService";
 
 export default function ServiceDashboard() {
   const [services, setServices] = useState([]);
@@ -29,6 +30,7 @@ export default function ServiceDashboard() {
   const [editService, setEditService] = useState(null);
   const [updating, setUpdating] = useState(false);
   const [updateError, setUpdateError] = useState("");
+  const [uploadingImage, setUploadingImage] = useState(false);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -65,6 +67,22 @@ export default function ServiceDashboard() {
       ...prev,
       [name]: type === "checkbox" ? checked : value,
     }));
+  };
+
+  const handleImageChange = async (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+    setUploadingImage(true);
+    try {
+      const url = await uploadToCloudinaryService(file);
+      if (url) {
+        setNewService((prev) => ({ ...prev, url }));
+      } else {
+        alert("Upload image failed!");
+      }
+    } finally {
+      setUploadingImage(false);
+    }
   };
 
   const handleCreateService = async (e) => {
@@ -256,6 +274,23 @@ export default function ServiceDashboard() {
             </div>
             <form onSubmit={handleCreateService} className="service-form">
               <label>
+                Image
+                <input
+                  type="file"
+                  accept="image/png, image/jpeg"
+                  onChange={handleImageChange}
+                  disabled={uploadingImage}
+                />
+              </label>
+              {uploadingImage && <div>Uploading...</div>}
+              {newService.url && (
+                <img
+                  src={newService.url}
+                  alt="Preview"
+                  style={{ maxWidth: 100, marginTop: 8 }}
+                />
+              )}
+              <label>
                 Name
                 <input
                   name="name"
@@ -343,72 +378,81 @@ export default function ServiceDashboard() {
             ) : viewError ? (
               <div className="error">{viewError}</div>
             ) : (
-              <form onSubmit={handleUpdateService} className="service-form">
-                <label>
-                  Name
-                  <input
-                    name="name"
-                    value={editService.name || ""}
-                    onChange={handleEditInputChange}
-                    required
+              <>
+                {editService?.url && (
+                  <img
+                    src={editService.url}
+                    alt="Service"
+                    style={{ maxWidth: 150, marginBottom: 12 }}
                   />
-                </label>
-                <label>
-                  Description
-                  <textarea
-                    name="description"
-                    value={editService.description || ""}
-                    onChange={handleEditInputChange}
-                    required
-                  />
-                </label>
-                <label className="checkbox-label">
-                  <input
-                    type="checkbox"
-                    name="allowHomeKit"
-                    checked={editService.allowHomeKit}
-                    onChange={handleEditInputChange}
-                  />
-                  Allow Home Kit
-                </label>
-                <label>
-                  Price
-                  <input
-                    name="price"
-                    type="number"
-                    value={editService.price || ""}
-                    onChange={handleEditInputChange}
-                    required
-                    min="0"
-                  />
-                </label>
-                <label>
-                  Type
-                  <input
-                    name="type"
-                    value={editService.type || ""}
-                    onChange={handleEditInputChange}
-                    required
-                  />
-                </label>
-                {updateError && <div className="error">{updateError}</div>}
-                <div className="modal-actions">
-                  <button
-                    type="button"
-                    onClick={() => setEditService(null)}
-                    className="cancel-btn"
-                  >
-                    Cancel
-                  </button>
-                  <button
-                    type="submit"
-                    className="submit-btn"
-                    disabled={updating}
-                  >
-                    {updating ? "Updating..." : "Update"}
-                  </button>
-                </div>
-              </form>
+                )}
+                <form onSubmit={handleUpdateService} className="service-form">
+                  <label>
+                    Name
+                    <input
+                      name="name"
+                      value={editService.name || ""}
+                      onChange={handleEditInputChange}
+                      required
+                    />
+                  </label>
+                  <label>
+                    Description
+                    <textarea
+                      name="description"
+                      value={editService.description || ""}
+                      onChange={handleEditInputChange}
+                      required
+                    />
+                  </label>
+                  <label className="checkbox-label">
+                    <input
+                      type="checkbox"
+                      name="allowHomeKit"
+                      checked={editService.allowHomeKit}
+                      onChange={handleEditInputChange}
+                    />
+                    Allow Home Kit
+                  </label>
+                  <label>
+                    Price
+                    <input
+                      name="price"
+                      type="number"
+                      value={editService.price || ""}
+                      onChange={handleEditInputChange}
+                      required
+                      min="0"
+                    />
+                  </label>
+                  <label>
+                    Type
+                    <input
+                      name="type"
+                      value={editService.type || ""}
+                      onChange={handleEditInputChange}
+                      required
+                    />
+                  </label>
+                  {updateError && <div className="error">{updateError}</div>}
+                  <div className="modal-actions">
+                    <button
+                      type="button"
+                      onClick={() => setEditService(null)}
+                      className="cancel-btn"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="submit-btn"
+                      disabled={updating}
+                    >
+                      {updating ? "Updating..." : "Update"}
+                    </button>
+                  </div>
+                </form>
+              </>
             )}
           </div>
         </div>

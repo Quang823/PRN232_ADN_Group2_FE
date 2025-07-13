@@ -2,6 +2,8 @@ import {
   getAllAppointments,
   getAppointmentById,
   createAppointment,
+  getAppointmentsOfUser as getAppointmentsOfUserAPI,
+  getFilteredAppointments,
 } from "../apiHandler/appointmentAPIHandler";
 
 export const fetchAllAppointments = async () => {
@@ -39,6 +41,27 @@ export const addAppointment = async (appointmentData) => {
   } catch (error) {
     throw new Error(
       error.response?.data?.message || "Failed to create appointment"
+    );
+  }
+};
+
+export const fetchAppointmentsOfUser = async (userId) => {
+  if (!userId) throw new Error("User ID is required");
+  try {
+    return await getAppointmentsOfUserAPI(userId);
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch booking history"
+    );
+  }
+};
+
+export const fetchFilteredAppointments = async ({ status, isHomeKit }) => {
+  try {
+    return await getFilteredAppointments({ status, isHomeKit });
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch filtered appointments"
     );
   }
 };

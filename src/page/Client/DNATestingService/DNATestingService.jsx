@@ -18,6 +18,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import ToastManager from "../../../component/common/Toast/ToastManager";
 import { ToastContainer } from "react-toastify";
 import { addPayment } from "../../../service/paymentService";
+import { addTestPersons } from "../../../service/testPersonService";
 
 const sections = [
   { id: "overview", label: "Overview" },
@@ -61,6 +62,12 @@ export default function DNATestingService() {
   const [bookingMessage, setBookingMessage] = useState("");
   const navigate = useNavigate();
   const [isHomeKit, setIsHomeKit] = useState(false);
+  const [testPersonsModal, setTestPersonsModal] = useState(null); // { appointmentId, totalPrice, checkoutUrl }
+  const [testPersonsData, setTestPersonsData] = useState([
+    { fullName: "", gender: "", relationship: "" },
+    { fullName: "", gender: "", relationship: "" },
+  ]);
+  const [testPersonsLoading, setTestPersonsLoading] = useState(false);
 
   useEffect(() => {
     const fetchServices = async () => {
@@ -168,9 +175,9 @@ export default function DNATestingService() {
                               onClick={() => {
                                 setSelectedService(service);
                                 setBookingModal({ service });
-                                setSelectedDate(null);
+                                setSelectedDate(new Date()); // luôn lấy ngày hiện tại
                                 setBookingMessage("");
-                                setIsHomeKit(false); // reset khi mở modal
+                                setIsHomeKit(false);
                               }}
                             >
                               Book now
@@ -215,33 +222,15 @@ export default function DNATestingService() {
                           : false,
                     });
                     ToastManager.showSuccess(
-                      "Booking successful! We will contact you for confirmation."
+                      "Booking successful! Please enter test persons information."
                     );
-                    // Gọi payment ngay sau khi booking thành công
-                    try {
-                      const { appointmentId, totalPrice } = appointmentRes;
-                      if (appointmentId && totalPrice) {
-                        const paymentRes = await addPayment({
-                          appointmentId,
-                          price: totalPrice,
-                        });
-                        if (paymentRes) {
-                          sessionStorage.setItem(
-                            "payment",
-                            JSON.stringify(paymentRes)
-                          );
-                          if (paymentRes.checkoutUrl) {
-                            window.location.href = paymentRes.checkoutUrl;
-                          }
-                        }
-                      }
-                    } catch (err) {
-                      ToastManager.showError(
-                        err.message ||
-                          "Payment link creation failed. Please try again."
-                      );
-                    }
-                    setTimeout(() => setBookingModal(null), 1500);
+                    // Hiện modal nhập test persons, truyền appointmentId, totalPrice, checkoutUrl
+                    setTestPersonsModal({
+                      appointmentId: appointmentRes.appointmentId,
+                      totalPrice: appointmentRes.totalPrice,
+                      checkoutUrl: null, // sẽ lấy sau khi tạo payment
+                    });
+                    setBookingModal(null);
                   } catch (err) {
                     ToastManager.showError(
                       err.message || "Booking failed. Please try again."
@@ -263,23 +252,13 @@ export default function DNATestingService() {
                 </label>
                 <label>
                   Appointment Date
-                  <DatePicker
-                    selected={selectedDate}
-                    onChange={(date) => setSelectedDate(date)}
-                    minDate={new Date()}
-                    dateFormat="dd/MM/yyyy"
-                    placeholderText="Choose a date"
-                    className="dna-datepicker-input"
-                    calendarClassName="dna-datepicker-calendar"
-                    popperPlacement="bottom"
-                    showPopperArrow={false}
-                    required
+                  <input
+                    value={
+                      selectedDate ? selectedDate.toLocaleDateString() : ""
+                    }
+                    disabled
+                    style={{ background: "#f3f4f6", color: "#222" }}
                   />
-                  {!selectedDate && (
-                    <div className="dna-datepicker-hint">
-                      Please select a date to proceed.
-                    </div>
-                  )}
                 </label>
                 {bookingModal.service.type === "Dan su" && (
                   <label
@@ -308,9 +287,255 @@ export default function DNATestingService() {
                   <button
                     type="submit"
                     className="submit-btn"
-                    disabled={bookingLoading || !selectedDate}
+                    disabled={bookingLoading}
                   >
                     {bookingLoading ? "Booking..." : "Confirm Booking"}
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        )}
+        {/* Modal nhập test persons */}
+        {testPersonsModal && (
+          <div
+            className="modal-overlay"
+            onClick={() => setTestPersonsModal(null)}
+          >
+            <div
+              className="modal service-modal test-person-modal"
+              onClick={(e) => e.stopPropagation()}
+            >
+              <div className="modal-header">
+                <h3
+                  style={{
+                    fontSize: "1.35rem",
+                    fontWeight: 700,
+                    color: "#2d3a4b",
+                    marginBottom: 8,
+                  }}
+                >
+                  Enter Test Persons Information
+                </h3>
+                <button
+                  className="modal-close-btn"
+                  onClick={() => setTestPersonsModal(null)}
+                >
+                  ×
+                </button>
+              </div>
+              <form
+                onSubmit={async (e) => {
+                  e.preventDefault();
+                  setTestPersonsLoading(true);
+                  try {
+                    // Gọi API 1 lần, truyền mảng 2 người
+                    await addTestPersons([
+                      {
+                        fullName: testPersonsData[0].fullName,
+                        gender: testPersonsData[0].gender === "true",
+                        relationship: testPersonsData[0].relationship,
+                        appointmentId: testPersonsModal.appointmentId,
+                      },
+                      {
+                        fullName: testPersonsData[1].fullName,
+                        gender: testPersonsData[1].gender === "true",
+                        relationship: testPersonsData[1].relationship,
+                        appointmentId: testPersonsModal.appointmentId,
+                      },
+                    ]);
+                    // Sau khi thành công, tạo payment và chuyển sang checkout
+                    const paymentRes = await addPayment({
+                      appointmentId: testPersonsModal.appointmentId,
+                      price: testPersonsModal.totalPrice,
+                    });
+                    if (paymentRes) {
+                      sessionStorage.setItem(
+                        "payment",
+                        JSON.stringify(paymentRes)
+                      );
+                      if (paymentRes.checkoutUrl) {
+                        ToastManager.showSuccess(
+                          "Booking successful! Redirecting to payment..."
+                        );
+                        setTestPersonsModal(null);
+                        window.location.href = paymentRes.checkoutUrl;
+                        return;
+                      }
+                    }
+                    ToastManager.showSuccess("Booking successful!");
+                    setTestPersonsModal(null);
+                  } catch (err) {
+                    ToastManager.showError(
+                      err.message || "Failed to add test persons"
+                    );
+                  } finally {
+                    setTestPersonsLoading(false);
+                  }
+                }}
+                className="test-person-form"
+                style={{
+                  display: "flex",
+                  gap: 24,
+                  flexWrap: "wrap",
+                  marginTop: 8,
+                }}
+              >
+                {[0, 1].map((i) => (
+                  <div
+                    key={i}
+                    className="test-person-col"
+                    style={{
+                      flex: 1,
+                      minWidth: 220,
+                      background: "#fafbff",
+                      borderRadius: 12,
+                      border: "1px solid #e5e7eb",
+                      padding: 18,
+                      marginBottom: 8,
+                    }}
+                  >
+                    <h4
+                      style={{
+                        marginBottom: 12,
+                        fontWeight: 600,
+                        color: "#3b4256",
+                        fontSize: "1.08rem",
+                      }}
+                    >
+                      Person {i + 1}
+                    </h4>
+                    <label
+                      className="test-person-label"
+                      style={{
+                        fontWeight: 500,
+                        color: "#374151",
+                        marginBottom: 4,
+                      }}
+                    >
+                      Full Name
+                      <input
+                        className="test-person-input"
+                        style={{
+                          width: "100%",
+                          padding: "10px 12px",
+                          borderRadius: 8,
+                          border: "1px solid #d1d5db",
+                          marginBottom: 10,
+                          fontSize: "1rem",
+                        }}
+                        type="text"
+                        value={testPersonsData[i].fullName}
+                        onChange={(e) =>
+                          setTestPersonsData((data) => {
+                            const arr = [...data];
+                            arr[i].fullName = e.target.value;
+                            return arr;
+                          })
+                        }
+                        required
+                      />
+                    </label>
+                    <label
+                      className="test-person-label"
+                      style={{
+                        fontWeight: 500,
+                        color: "#374151",
+                        marginBottom: 4,
+                      }}
+                    >
+                      Gender
+                      <select
+                        className="test-person-input"
+                        style={{
+                          width: "100%",
+                          padding: "10px 12px",
+                          borderRadius: 8,
+                          border: "1px solid #d1d5db",
+                          marginBottom: 10,
+                          fontSize: "1rem",
+                          background: "#fff",
+                        }}
+                        value={testPersonsData[i].gender}
+                        onChange={(e) =>
+                          setTestPersonsData((data) => {
+                            const arr = [...data];
+                            arr[i].gender = e.target.value;
+                            return arr;
+                          })
+                        }
+                        required
+                      >
+                        <option value="">Select gender</option>
+                        <option value="true">Male</option>
+                        <option value="false">Female</option>
+                      </select>
+                    </label>
+                    <label
+                      className="test-person-label"
+                      style={{
+                        fontWeight: 500,
+                        color: "#374151",
+                        marginBottom: 4,
+                      }}
+                    >
+                      Relationship
+                      <input
+                        className="test-person-input"
+                        style={{
+                          width: "100%",
+                          padding: "10px 12px",
+                          borderRadius: 8,
+                          border: "1px solid #d1d5db",
+                          marginBottom: 10,
+                          fontSize: "1rem",
+                        }}
+                        type="text"
+                        value={testPersonsData[i].relationship}
+                        onChange={(e) =>
+                          setTestPersonsData((data) => {
+                            const arr = [...data];
+                            arr[i].relationship = e.target.value;
+                            return arr;
+                          })
+                        }
+                        required
+                      />
+                    </label>
+                  </div>
+                ))}
+                <div
+                  className="test-person-actions"
+                  style={{
+                    width: "100%",
+                    display: "flex",
+                    justifyContent: "flex-end",
+                    gap: 12,
+                    marginTop: 8,
+                  }}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setTestPersonsModal(null)}
+                    className="cancel-btn"
+                    disabled={testPersonsLoading}
+                    style={{ minWidth: 110 }}
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    type="submit"
+                    className="submit-btn"
+                    disabled={testPersonsLoading}
+                    style={{
+                      minWidth: 180,
+                      fontWeight: 600,
+                      fontSize: "1.08rem",
+                    }}
+                  >
+                    {testPersonsLoading
+                      ? "Saving..."
+                      : "Save & Continue to Payment"}
                   </button>
                 </div>
               </form>

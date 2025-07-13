@@ -40,3 +40,31 @@ export const createAppointment = async (appointmentData) => {
     throw error;
   }
 };
+
+export const getAppointmentsOfUser = async (userId) => {
+  try {
+    const response = await axios.get(`${rootAppointment}/appointment-of-user`, {
+      params: { userId },
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getFilteredAppointments = async ({ status, isHomeKit }) => {
+  try {
+    const params = {};
+    if (status !== undefined && status !== null) params.status = status;
+    if (isHomeKit !== undefined && isHomeKit !== null)
+      params.isHomeKit = isHomeKit;
+    const response = await axios.get(rootAppointment, {
+      params,
+      headers: getAuthHeader(),
+    });
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

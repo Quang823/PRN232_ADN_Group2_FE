@@ -37,3 +37,15 @@ export const checkPayment = async (orderCode) => {
     throw error;
   }
 };
+
+export const getPaymentsOfUser = async (userId) => {
+  try {
+    const response = await axios.get(
+      `${rootPayment}/payments-of-users/${userId}`,
+      { headers: getAuthHeader() }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

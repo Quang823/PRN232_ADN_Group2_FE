@@ -802,3 +802,92 @@
   background: #a5b4fc;
   cursor: not-allowed;
 }
+
+.test-person-modal {
+  min-width: 600px;
+  max-width: 98vw;
+  background: #fff;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
+  padding: 36px 32px 28px 32px;
+  color: #111;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.test-person-form {
+  width: 100%;
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
+.test-person-col {
+  flex: 1;
+  min-width: 220px;
+  background: #fafbff;
+  border-radius: 12px;
+  border: 1px solid #e5e7eb;
+  padding: 18px;
+  margin-bottom: 8px;
+  box-sizing: border-box;
+}
+
+.test-person-label {
+  font-weight: 500;
+  color: #374151;
+  margin-bottom: 4px;
+  display: block;
+}
+
+.test-person-input {
+  width: 100%;
+  padding: 10px 12px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+  margin-bottom: 10px;
+  font-size: 1rem;
+  background: #fff;
+  color: #222;
+  box-sizing: border-box;
+  transition: border 0.2s, box-shadow 0.2s;
+}
+.test-person-input:focus {
+  border: 1.5px solid #6366f1;
+  outline: none;
+  background: #f9fafb;
+}
+
+.test-person-actions {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 8px;
+}
+
+.test-person-actions .cancel-btn,
+.test-person-actions .submit-btn {
+  min-width: 120px;
+  max-width: 220px;
+  width: auto;
+  flex: unset;
+  text-align: center;
+}
+
+@media (max-width: 700px) {
+  .test-person-modal {
+    min-width: 98vw;
+    padding: 16px 4px 12px 4px;
+  }
+  .test-person-form {
+    flex-direction: column;
+    gap: 8px;
+  }
+  .test-person-col {
+    min-width: 0;
+    padding: 10px 6px;
+  }
+}

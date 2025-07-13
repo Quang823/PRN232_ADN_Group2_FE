@@ -29,6 +29,11 @@ const navigationItems = [
     icon: UserCheck,
   },
   {
+    title: "Appointment Management",
+    url: "/staff/appointment",
+    icon: UserCheck,
+  },
+  {
     title: "Revenue Management",
     url: "/staff/revenue",
     icon: UserCheck,

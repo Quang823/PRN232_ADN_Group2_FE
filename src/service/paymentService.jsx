@@ -1,6 +1,7 @@
 import {
   createPaymentLink,
   checkPayment as checkPaymentAPI,
+  getPaymentsOfUser as getPaymentsOfUserAPI,
 } from "../apiHandler/paymentAPIHandler";
 
 export const addPayment = async (paymentData) => {
@@ -26,6 +27,17 @@ export const checkPayment = async (orderCode) => {
   } catch (error) {
     throw new Error(
       error.response?.data?.message || "Failed to check payment status"
+    );
+  }
+};
+
+export const fetchPaymentsOfUser = async (userId) => {
+  if (!userId) throw new Error("User ID is required");
+  try {
+    return await getPaymentsOfUserAPI(userId);
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.message || "Failed to fetch payment history"
     );
   }
 };

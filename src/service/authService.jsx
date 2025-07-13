@@ -1,4 +1,9 @@
-import { loginUser, registerUser } from "../apiHandler/authAPIHandler";
+import {
+  loginUser,
+  registerUser,
+  getUserProfile as getUserProfileAPI,
+  updateUser as updateUserAPI,
+} from "../apiHandler/authAPIHandler";
 import { jwtDecode } from "jwt-decode";
 
 // Helper function to process normal login response
@@ -83,5 +88,22 @@ export const register = async (userData) => {
       throw new Error(data.message || "Registration failed");
     }
     throw new Error(error.message || "Network error");
+  }
+};
+
+export const getUserProfile = async (userId = null) => {
+  try {
+    return await getUserProfileAPI(userId);
+  } catch (error) {
+    return handleAuthError(error, "Failed to get user profile");
+  }
+};
+
+export const updateUser = async (userId, userData) => {
+  if (!userId) throw new Error("UserId is required");
+  try {
+    return await updateUserAPI(userId, userData);
+  } catch (error) {
+    return handleAuthError(error, "Failed to update user");
   }
 };
