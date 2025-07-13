@@ -13,3 +13,21 @@ export const getSamplesByAppointmentId = async (appoinmentId) => {
     throw error;
   }
 };
+
+const getAuthHeader = () => {
+  const token = sessionStorage.getItem("token");
+  return token ? { Authorization: `Bearer ${token}` } : {};
+};
+
+export const collectSamples = async ({ appointmentId, sampleIds }) => {
+  try {
+    const response = await axios.post(
+      `${rootSample}/collect`,
+      { appointmentId, sampleIds },
+      { headers: getAuthHeader() }
+    );
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { fetchServiceById } from "../../../service/dnaServiceService";
+import { fetchFeedbacksByServiceId } from "../../../service/feedbackService";
 import "./DNATestingServiceDetail.scss";
 
 const DNATestingServiceDetail = () => {
@@ -9,6 +10,8 @@ const DNATestingServiceDetail = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [feedbacks, setFeedbacks] = useState([]); // Danh sách feedback
+  const [feedbacksLoading, setFeedbacksLoading] = useState(false);
+  const [feedbacksError, setFeedbacksError] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -16,24 +19,7 @@ const DNATestingServiceDetail = () => {
       setError("");
       try {
         const data = await fetchServiceById(serviceId);
-        console.log("data", data);
         setService(data);
-        // Giả lập fetch danh sách feedback (thay bằng API thực tế)
-        const mockFeedbacks = [
-          {
-            id: 1,
-            text: "Dịch vụ rất tốt, đáng tiền!",
-            user: "User1",
-            date: "2025-07-12",
-          },
-          {
-            id: 2,
-            text: "Chất lượng ổn, nhưng cần cải thiện thời gian xử lý.",
-            user: "User2",
-            date: "2025-07-11",
-          },
-        ];
-        setFeedbacks(mockFeedbacks);
       } catch (err) {
         setError("Could not load service details.");
       } finally {
@@ -41,6 +27,22 @@ const DNATestingServiceDetail = () => {
       }
     };
     if (serviceId) fetchData();
+  }, [serviceId]);
+
+  useEffect(() => {
+    const fetchFeedbacks = async () => {
+      setFeedbacksLoading(true);
+      setFeedbacksError("");
+      try {
+        const data = await fetchFeedbacksByServiceId(serviceId);
+        setFeedbacks(data);
+      } catch (err) {
+        setFeedbacksError(err.message || "Could not load feedbacks.");
+      } finally {
+        setFeedbacksLoading(false);
+      }
+    };
+    if (serviceId) fetchFeedbacks();
   }, [serviceId]);
 
   if (loading)
@@ -107,15 +109,42 @@ const DNATestingServiceDetail = () => {
       </section>
       <section className="feedback-section">
         <h2 className="section-title">Feedbacks</h2>
-        {feedbacks.length > 0 ? (
+        {feedbacksLoading ? (
+          <div className="service-loading">Loading feedbacks...</div>
+        ) : feedbacksError ? (
+          <div className="service-error">{feedbacksError}</div>
+        ) : feedbacks.length > 0 ? (
           <div className="feedback-list">
-            {feedbacks.map((feedback) => (
-              <div key={feedback.id} className="feedback-item">
-                <p className="feedback-text">{feedback.text}</p>
-                <p className="feedback-meta">
-                  <span className="feedback-user">{feedback.user}</span> -{" "}
-                  <span className="feedback-date">{feedback.date}</span>
-                </p>
+            {feedbacks.map((fb) => (
+              <div key={fb.feedbackId} className="feedback-item">
+                <div className="feedback-user-info">
+                  {fb.avatarUrl && (
+                    <img
+                      src={fb.avatarUrl}
+                      alt={fb.fullName}
+                      className="feedback-avatar"
+                    />
+                  )}
+                  <div>
+                    <span className="feedback-user">{fb.fullName}</span>
+                    <span className="feedback-date">
+                      {fb.createdAt?.slice(0, 10) || fb.date}
+                    </span>
+                  </div>
+                </div>
+                <div className="feedback-rating">
+                  {Array.from({ length: fb.rating }).map((_, i) => (
+                    <span key={i} style={{ color: "#fbbf24", fontSize: 18 }}>
+                      ★
+                    </span>
+                  ))}
+                  {Array.from({ length: 5 - fb.rating }).map((_, i) => (
+                    <span key={i} style={{ color: "#e5e7eb", fontSize: 18 }}>
+                      ★
+                    </span>
+                  ))}
+                </div>
+                <p className="feedback-text">{fb.comment}</p>
               </div>
             ))}
           </div>

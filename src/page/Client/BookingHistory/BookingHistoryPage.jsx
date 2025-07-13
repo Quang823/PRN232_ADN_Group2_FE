@@ -2,7 +2,13 @@ import React, { useEffect, useState } from "react";
 import { fetchAppointmentsOfUser } from "../../../service/appointmentService";
 import { fetchPaymentsOfUser } from "../../../service/paymentService";
 import { addFeedback } from "../../../service/feedbackService";
+import {
+  fetchSamplesByAppointmentId,
+  collectSamplesService,
+} from "../../../service/sampleService";
 import "./BookingHistoryPage.scss";
+import ToastManager from "../../../component/common/Toast/ToastManager";
+import { ToastContainer } from "react-toastify";
 
 const statusOptions = [
   { value: "", label: "All Status" },
@@ -69,6 +75,8 @@ export default function BookingHistoryPage() {
   const [feedbackLoading, setFeedbackLoading] = useState(false);
   const [feedbackSuccess, setFeedbackSuccess] = useState(false);
   const [feedbackError, setFeedbackError] = useState("");
+  const [collectingId, setCollectingId] = useState(null);
+  // const [collectMsg, setCollectMsg] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -227,6 +235,54 @@ export default function BookingHistoryPage() {
                             Feedback
                           </button>
                         )}
+                        {row.status === "WaitingToCollect" &&
+                          row.isHomeKit === true && (
+                            <button
+                              className="collect-btn-action"
+                              disabled={collectingId === row.appointmentId}
+                              onClick={async () => {
+                                setCollectingId(row.appointmentId);
+                                try {
+                                  const samples =
+                                    await fetchSamplesByAppointmentId(
+                                      row.appointmentId
+                                    );
+                                  const sampleIds = Array.isArray(samples)
+                                    ? samples.map((s) => s.sampleId)
+                                    : [];
+                                  if (sampleIds.length !== 2)
+                                    throw new Error("Sample data invalid");
+                                  await collectSamplesService({
+                                    appointmentId: row.appointmentId,
+                                    sampleIds,
+                                  });
+                                  ToastManager.showSuccess(
+                                    "Sample collection successful!"
+                                  );
+                                } catch (err) {
+                                  ToastManager.showError(
+                                    err.message || "Collect sample failed"
+                                  );
+                                } finally {
+                                  setCollectingId(null);
+                                }
+                              }}
+                              style={{
+                                marginLeft: 8,
+                                background: "#4ade80",
+                                color: "#222",
+                                fontWeight: 600,
+                                borderRadius: 6,
+                                padding: "6px 16px",
+                                border: "none",
+                                cursor: "pointer",
+                              }}
+                            >
+                              {collectingId === row.appointmentId
+                                ? "Collecting..."
+                                : "Collect Sample"}
+                            </button>
+                          )}
                       </td>
                     </tr>
                   ))}
@@ -387,6 +443,7 @@ export default function BookingHistoryPage() {
           </div>
         </div>
       )}
+      <ToastContainer />
     </div>
   );
 }

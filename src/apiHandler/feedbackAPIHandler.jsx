@@ -18,3 +18,12 @@ export const postFeedback = async (feedbackData) => {
     throw error;
   }
 };
+
+export const getFeedbacksByServiceId = async (serviceId) => {
+  try {
+    const response = await axios.get(`${rootFeedback}/service/${serviceId}`);
+    return response.data;
+  } catch (error) {
+    throw error;
+  }
+};
